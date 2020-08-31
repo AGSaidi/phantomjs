@@ -1,0 +1,15 @@
+arch: arm64-graviton2
+group: edge
+virt: lxd
+dist: xenial
+
+before_install:
+  - sudo apt-get install -y build-essential git flex bison gperf python ruby git libfontconfig1-dev  libssl-dev libicu-dev
+
+script:
+  - python build.py --silent --confirm --release --qt-config="-no-pkg-config" --git-clean-qtbase --git-clean-qtwebkit
+
+after_success:
+  - strip bin/phantomjs
+  - ./bin/phantomjs -v
+
