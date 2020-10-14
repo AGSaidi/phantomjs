@@ -1,0 +1,17 @@
+arch: arm64-graviton2
+group: edge
+virt: vm
+dist: focal
+
+services:
+  - docker
+
+before_install:
+  - docker pull arm64v8/ubuntu:16.04
+
+script:
+  - docker run -v $PWD:/src arm64v8/ubuntu:16.04 /src/deploy/docker-build.sh
+
+after_success:
+  - ./phantomjs -v
+
